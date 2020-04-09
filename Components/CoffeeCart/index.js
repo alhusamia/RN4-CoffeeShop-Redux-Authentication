@@ -6,9 +6,10 @@ import { connect } from "react-redux";
 import CartItem from "./CartItem";
 
 import { checkoutCart } from "../../redux/actions";
+import { USER, LOGIN } from "../../Navigation/screenNames";
 
-const CoffeeCart = ({ cart, checkoutCart, navigation }) => {
-  const cartItems = cart.map(item => (
+const CoffeeCart = ({ cart, user, checkoutCart, navigation }) => {
+  const cartItems = cart.map((item) => (
     <CartItem item={item} key={item.drink + item.option} />
   ));
 
@@ -17,8 +18,16 @@ const CoffeeCart = ({ cart, checkoutCart, navigation }) => {
       {cartItems.length ? (
         <>
           {cartItems}
-          <Button full danger onPress={checkoutCart}>
-            <Text>Checkout</Text>
+          <Button
+            full
+            danger
+            onPress={
+              user
+                ? checkoutCart
+                : () => navigation.navigate(USER, { screen: LOGIN })
+            }
+          >
+            <Text>{user ? "Checkout" : "Login to Checkout"}</Text>
           </Button>
         </>
       ) : (
@@ -28,12 +37,13 @@ const CoffeeCart = ({ cart, checkoutCart, navigation }) => {
   );
 };
 
-const mapStateToProps = ({ cart }) => ({
-  cart
+const mapStateToProps = ({ cart, user }) => ({
+  cart,
+  user,
 });
 
-const mapDispatchToProps = dispatch => ({
-  checkoutCart: () => dispatch(checkoutCart())
+const mapDispatchToProps = (dispatch) => ({
+  checkoutCart: () => dispatch(checkoutCart()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CoffeeCart);
