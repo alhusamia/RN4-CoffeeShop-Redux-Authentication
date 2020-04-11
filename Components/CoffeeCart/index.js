@@ -23,7 +23,7 @@ const CoffeeCart = ({ cart, user, checkoutCart, navigation }) => {
             danger
             onPress={
               user
-                ? checkoutCart
+                ? () => checkoutCart({ date: new Date(), items: cart })
                 : () => navigation.navigate(USER, { screen: LOGIN })
             }
           >
@@ -42,8 +42,6 @@ const mapStateToProps = ({ cart, user }) => ({
   user,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  checkoutCart: () => dispatch(checkoutCart()),
-});
+const mapDispatchToProps = { checkoutCart };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CoffeeCart);

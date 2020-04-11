@@ -2,16 +2,20 @@ import { SET_CURRENT_USER } from "./types";
 import decode from "jwt-decode";
 import { AsyncStorage } from "react-native";
 import { setErrors } from "./errors";
+import { setOrders } from "./orders";
 
 import instance from "./instance";
 
-const setCurrentUser = (token) => {
+const setCurrentUser = (token) => (dispatch) => {
   setAuthToken(token);
-
-  return {
+  if (!token) {
+    dispatch(setOrders([]));
+    AsyncStorage.removeItem("history");
+  }
+  dispatch({
     type: SET_CURRENT_USER,
     payload: token ? decode(token) : null,
-  };
+  });
 };
 
 const setAuthToken = (token) => {
