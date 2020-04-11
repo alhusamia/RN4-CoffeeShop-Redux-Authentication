@@ -44,12 +44,13 @@ export const login = (userData, redirect) => async (dispatch) => {
   }
 };
 
-export const signup = (userData) => async (dispatch) => {
+export const signup = (userData, redirect) => async (dispatch) => {
   try {
     const res = await instance.post("register/", userData);
     const { token } = res.data;
 
-    dispatch(setCurrentUser(token));
+    dispatch(login(userData));
+    redirect();
   } catch (error) {
     dispatch(setErrors(error.response.data));
   }

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 // Screen Names
-import { LOGIN } from "../../Navigation/screenNames";
+import { LOGIN, COFFEESHOPS, SHOP } from "../../Navigation/screenNames";
 
 // Styling Components
 import { TextInput, TouchableOpacity, View } from "react-native";
@@ -18,9 +18,12 @@ class Signup extends Component {
   };
 
   render() {
-    const { navigation } = this.props;
+    const { navigation, signup } = this.props;
     const { username, password } = this.state;
     const { errors } = this.props;
+
+    const goToCoffeList = () =>
+      navigation.navigate(SHOP, { screen: COFFEESHOPS });
     return (
       <View style={styles.authContainer}>
         <Text style={styles.authTitle}>Signup</Text>
@@ -48,7 +51,7 @@ class Signup extends Component {
         />
         <TouchableOpacity
           style={styles.authButton}
-          onPress={() => this.props.Signup(this.state)}
+          onPress={() => signup(this.state, goToCoffeList)}
         >
           <Text style={styles.authButtonText}>Sign up</Text>
         </TouchableOpacity>
@@ -67,8 +70,6 @@ const mapStateToProps = (state) => {
     errors: state.errors.errors,
   };
 };
-const mapDispatchToProps = (dispatch) => ({
-  Signup: (userdata) => dispatch(signup(userdata)),
-});
+const mapDispatchToProps = { signup };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Signup);

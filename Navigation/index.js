@@ -27,7 +27,7 @@ function RootTabNavigator() {
       }}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color }) => {
-          let iconName = "";
+          let iconName = ""; 
           switch (route.name) {
             case USER:
               iconName = "account";

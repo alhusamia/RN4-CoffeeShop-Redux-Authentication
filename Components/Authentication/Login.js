@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 // Screen Names
-import { SIGNUP, SHOP, COFFEESHOP, COFFEESHOPS } from "../../Navigation/screenNames";
+import { SIGNUP, SHOP, COFFEESHOPS } from "../../Navigation/screenNames";
 
 // Styling Components
 import { TextInput, TouchableOpacity, View } from "react-native";
